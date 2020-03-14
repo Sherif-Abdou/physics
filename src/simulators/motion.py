@@ -1,4 +1,4 @@
-from src.vector import Vector
+from src.units import Vector
 
 
 class Motion:

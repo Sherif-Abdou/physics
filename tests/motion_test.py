@@ -1,5 +1,6 @@
 import unittest
-from src import Vector, Motion
+from src.units import Vector
+from src.simulators import Motion
 
 
 class VelocityTestCase(unittest.TestCase):

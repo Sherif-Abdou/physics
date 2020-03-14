@@ -1,6 +1,6 @@
 import unittest
 from math import sqrt, radians
-from src import Vector
+from src.units import Vector
 
 
 class VectorTestCase(unittest.TestCase):
