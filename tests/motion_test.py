@@ -1,5 +1,5 @@
 import unittest
-from src.motion import Motion, Vector
+from src import Vector, Motion
 
 
 class MyTestCase(unittest.TestCase):

@@ -1,12 +1,14 @@
 import unittest
-from src.vector import *
 from math import sqrt, radians
+from src import Vector
 
 
 class VectorTests(unittest.TestCase):
     def test_init(self):
         vector = Vector(1, 2)
         print(vector)
+        self.assertEqual(vector.x, 1)
+        self.assertEqual(vector.y, 2)
 
     def test_magnitude(self):
         vector = Vector(1, 1)
