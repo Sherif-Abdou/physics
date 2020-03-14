@@ -54,3 +54,7 @@ class Vector:
 
     def __eq__(self, other):
         return (self.x == other.x) and (self.y == other.y)
+
+    def __truediv__(self, other):
+        if isinstance(other, (float, int)):
+            return Vector(self.x / other, self.y / other)
