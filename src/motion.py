@@ -19,10 +19,14 @@ class Motion:
 
     def __applyAcceleration(self, before, after):
         delta_time = after - before
-        return (self.acceleration/2)*(delta_time**2)
+        return (self.acceleration / 2) * (delta_time ** 2)
 
     def __applyVelocity(self, before, after):
+        movement_vector = self.__calculateVelocity(after, before)
+        self.position = self.position + movement_vector
+
+    def __calculateVelocity(self, after, before):
         delta_time = after - before
         movement_vector = self.velocity * delta_time
         movement_vector += self.__applyAcceleration(before, after)
-        self.position = self.position + movement_vector
+        return movement_vector
