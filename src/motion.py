@@ -5,6 +5,7 @@ class Motion:
     def __init__(self):
         self.position = Vector(0, 0)
         self.velocity = Vector(0, 0)
+        self.acceleration = Vector(0, 0)
         self.__time = 0
 
     @property
@@ -16,7 +17,12 @@ class Motion:
         self.__applyVelocity(self.__time, value)
         self.__time = value
 
+    def __applyAcceleration(self, before, after):
+        delta_time = after - before
+        return (self.acceleration/2)*(delta_time**2)
+
     def __applyVelocity(self, before, after):
         delta_time = after - before
         movement_vector = self.velocity * delta_time
+        movement_vector += self.__applyAcceleration(before, after)
         self.position = self.position + movement_vector
