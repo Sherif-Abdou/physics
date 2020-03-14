@@ -17,6 +17,6 @@ class Motion:
         self.__time = value
 
     def __applyVelocity(self, before, after):
-        delta_time = after-before
-        movement_vector = Vector(self.velocity.x * delta_time, self.velocity.y * delta_time)
-        self.position = Vector(self.position.x + movement_vector.x, self.position.y + movement_vector.y)
+        delta_time = after - before
+        movement_vector = self.velocity * delta_time
+        self.position = self.position + movement_vector

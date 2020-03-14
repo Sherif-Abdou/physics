@@ -29,8 +29,8 @@ class Vector:
     @mag.setter
     def mag(self, mag):
         prev_angle = self.angle
-        self.x = math.cos(prev_angle)*mag
-        self.y = math.sin(prev_angle)*mag
+        self.x = math.cos(prev_angle) * mag
+        self.y = math.sin(prev_angle) * mag
 
     @property
     def angle(self):
@@ -41,3 +41,16 @@ class Vector:
         prev_mag = self.mag
         self.x = math.cos(angle) * prev_mag
         self.y = math.sin(angle) * prev_mag
+
+    def __add__(self, other):
+        return Vector(self.x + other.x, self.y + other.y)
+
+    def __sub__(self, other):
+        return Vector(self.x - other.x, self.y - other.y)
+
+    def __mul__(self, other):
+        if isinstance(other, (float, int)):
+            return Vector(self.x * other, self.y * other)
+
+    def __eq__(self, other):
+        return (self.x == other.x) and (self.y == other.y)

@@ -22,7 +22,8 @@ class VectorTests(unittest.TestCase):
         self.assertAlmostEqual(vector.angle, radians(45), delta=0.01)
         vector.angle = vector.angle / 2
         self.assertEqual(vector.mag, sqrt(2))
-        self.assertAlmostEqual(vector.angle, radians(45)/2, delta=0.01)
+        self.assertAlmostEqual(vector.angle, radians(45) / 2, delta=0.01)
+
 
 if __name__ == '__main__':
     unittest.main()

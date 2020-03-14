@@ -15,8 +15,8 @@ class MyTestCase(unittest.TestCase):
         motion.velocity = Vector(1, 1)
         for i in range(50):
             motion.time += 1
-            self.assertEqual(motion.position.x, i+1)
-            self.assertEqual(motion.position.y, i+1)
+            self.assertEqual(motion.position.x, i + 1)
+            self.assertEqual(motion.position.y, i + 1)
 
 
 if __name__ == '__main__':
