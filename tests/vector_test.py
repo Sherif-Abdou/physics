@@ -1,9 +1,9 @@
 import unittest
 from math import sqrt, radians
-from src import Vector
+from src.units import Vector
 
 
-class VectorTests(unittest.TestCase):
+class VectorTestCase(unittest.TestCase):
     def test_init(self):
         vector = Vector(1, 2)
         print(vector)
@@ -22,7 +22,7 @@ class VectorTests(unittest.TestCase):
         vector = Vector(1, 1)
         self.assertEqual(vector.mag, sqrt(2))
         self.assertAlmostEqual(vector.angle, radians(45), delta=0.01)
-        vector.angle = vector.angle / 2
+        vector.angle /= 2
         self.assertEqual(vector.mag, sqrt(2))
         self.assertAlmostEqual(vector.angle, radians(45) / 2, delta=0.01)
 

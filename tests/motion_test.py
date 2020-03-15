@@ -1,8 +1,9 @@
 import unittest
-from src import Vector, Motion
+from src.units import Vector
+from src.simulators import Motion
 
 
-class MyTestCase(unittest.TestCase):
+class VelocityTestCase(unittest.TestCase):
     def test_velocity(self):
         motion = Motion()
         motion.velocity = Vector(1, 1)
@@ -17,6 +18,29 @@ class MyTestCase(unittest.TestCase):
             motion.time += 1
             self.assertEqual(motion.position.x, i + 1)
             self.assertEqual(motion.position.y, i + 1)
+
+
+class AccelerationTestCase(unittest.TestCase):
+    def test_acceleration(self):
+        motion = Motion()
+        motion.acceleration = Vector(2, 2)
+        self.assertEqual(motion.position, Vector(0, 0))
+        motion.time += 2
+        self.assertEqual(motion.position, Vector(4, 4))
+
+    def test_acceleration2(self):
+        motion = Motion()
+        motion.acceleration = Vector(2, 4)
+        self.assertEqual(motion.position, Vector(0, 0))
+        motion.time += 3
+        self.assertEqual(motion.position, Vector(9, 18))
+
+    def test_multi_acceleration(self):
+        motion = Motion()
+        motion.acceleration = Vector(2, 2)
+        for i in range(20):
+            self.assertEqual(motion.position, Vector(i**2, i**2))
+            motion.time += 1
 
 
 if __name__ == '__main__':
