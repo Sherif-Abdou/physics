@@ -30,3 +30,11 @@ class Entity:
     @time.setter
     def time(self, value):
         self.__motion.time = value
+
+    @property
+    def velocity(self):
+        return self.__motion.velocity
+
+    @velocity.setter
+    def velocity(self, value):
+        self.__motion.velocity = value
