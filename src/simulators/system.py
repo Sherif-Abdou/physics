@@ -1,3 +1,5 @@
+from sympy.core.symbol import symbols
+from sympy.solvers.solveset import nonlinsolve
 
 class System:
     continuous_interval = 0.1
@@ -5,6 +7,7 @@ class System:
     def __init__(self, entities):
         self.entities = entities
         self.__time = 0
+        self.collision_range = 0.25
 
     @property
     def time(self):
@@ -24,3 +27,16 @@ class System:
     def __update(self):
         for entity in self.entities:
             entity.time = self.time
+
+    def __check_collision(self):
+        for entity in self.entities:
+            for other in self.entities:
+                if other.name == entity.name:
+                    continue
+
+                delta = entity.position - other.position
+                if delta < self.collision_range:
+                    pass
+
+    def __apply_collision(self, first, second):
+        pass
