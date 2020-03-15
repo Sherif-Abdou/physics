@@ -1,4 +1,4 @@
-from src.vector import Vector
+from src.units import Vector
 
 
 class Motion:
@@ -29,4 +29,5 @@ class Motion:
         delta_time = after - before
         movement_vector = self.velocity * delta_time
         movement_vector += self.__applyAcceleration(before, after)
+        self.velocity += self.acceleration
         return movement_vector

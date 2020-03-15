@@ -1,5 +1,6 @@
 import unittest
-from src import Vector, Motion
+from src.units import Vector
+from src.simulators import Motion
 
 
 class VelocityTestCase(unittest.TestCase):
@@ -33,6 +34,13 @@ class AccelerationTestCase(unittest.TestCase):
         self.assertEqual(motion.position, Vector(0, 0))
         motion.time += 3
         self.assertEqual(motion.position, Vector(9, 18))
+
+    def test_multi_acceleration(self):
+        motion = Motion()
+        motion.acceleration = Vector(2, 2)
+        for i in range(20):
+            self.assertEqual(motion.position, Vector(i**2, i**2))
+            motion.time += 1
 
 
 if __name__ == '__main__':

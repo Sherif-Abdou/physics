@@ -58,3 +58,9 @@ class Vector:
     def __truediv__(self, other):
         if isinstance(other, (float, int)):
             return Vector(self.x / other, self.y / other)
+
+    def __str__(self):
+        return f"X: {self.x} Y: {self.y}"
+
+    def __repr__(self):
+        return f" X: {self.x} Y: {self.y}"
