@@ -2,9 +2,10 @@ import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 from src.simulators import Entity, System
 from src.units import Vector
-from random import randrange
 
 wall_cache = dict()
+
+
 def wall(system: System):
     for entity in system.entities:
         if system.time - wall_cache[entity.name][0] > 0.075:
@@ -17,6 +18,7 @@ def wall(system: System):
                 entity.velocity.y *= -1
                 wall_cache[entity.name][1] = system.time
 
+
 if __name__ == "__main__":
     fig, ax = plt.subplots()
     xdata, ydata = [], []
@@ -25,21 +27,22 @@ if __name__ == "__main__":
     randomthings = []
     for x in range(5):
         for y in range(5):
-            entity1 = Entity(2)
-            entity1.name = f"{x} {y}"
+            entity = Entity(2)
+            entity.name = f"{x} {y}"
             wall_cache[f"{x} {y}"] = [0, 0]
-            entity1.position = Vector(2*(x-2.5), 2*(y-2.5))
-            randomthings.append(entity1)
+            entity.position = Vector(2 * (x - 2.5), 2 * (y - 2.5))
+            randomthings.append(entity)
 
-    entity1 = Entity(8)
-    entity1.name = f"other"
+    special_entity = Entity(8)
+    special_entity.name = f"other"
     wall_cache[f"other"] = [0, 0]
-    entity1.position = Vector(-9, -9)
-    entity1.velocity = Vector(1, 2)
-    randomthings.append(entity1)
+    special_entity.position = Vector(-9, -9)
+    special_entity.velocity = Vector(1, 2)
+    randomthings.append(special_entity)
 
     system = System(randomthings)
     system.onUpdate = wall
+
 
     def init():
         ax.set_ylim(-10, 10)
