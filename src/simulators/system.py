@@ -61,27 +61,11 @@ class System:
                     last_hit2 = other.name
 
     def __apply_collision(self, first, second):
-        # x_equations = [((first.mass * first.velocity.x)+(second.mass * first.velocity.x)
-        #                - (first.mass * v1) - (second.mass * v2)),
-        #                (first.mass * first.velocity.x ** 2) + (second.mass * second.velocity.x ** 2)
-        #                - (first.mass * v1**2) - (second.mass * v2**2)]
-        #
-        # y_equations = [((first.mass * first.velocity.y)+(second.mass * first.velocity.y)
-        #                - (first.mass * v1) - (second.mass * v2)),
-        #                (first.mass * first.velocity.y ** 2) + (second.mass * second.velocity.y ** 2)
-        #                - (first.mass * v1**2) - (second.mass * v2**2)]
-        #
-        # x_values = nonlinsolve(x_equations, [v1, v2])
-        # y_values = nonlinsolve(y_equations, [v1, v2])
-        x_values = [(((first.mass - second.mass) * first.velocity.x) + (2 * second.mass * second.velocity.x)) /
-                    (first.mass + second.mass), ((2 * first.mass * first.velocity.x)
-                                                 - ((first.mass - second.mass)*second.velocity.x))]
+        v1 = first.velocity - (first.position - second.position)*((2*second.mass)/(first.mass + second.mass))*(((first.velocity - second.velocity)*(first.position - second.position)) / (first.position - second.position).mag ** 2)
+        v2 = second.velocity - (second.position - first.position)*((2*first.mass)/(first.mass + second.mass))*(((second.velocity - first.velocity)*(second.position - first.position)) / (second.position - first.position).mag ** 2)
 
-        y_values = [(((first.mass - second.mass) * first.velocity.y) + (2 * second.mass * second.velocity.y)) /
-                    (first.mass + second.mass), ((2 * first.mass * first.velocity.y)
-                                                 - ((first.mass - second.mass) * second.velocity.y))]
-
-        first.velocity = Vector(x_values[0], y_values[0])
-        second.velocity = Vector(x_values[1], y_values[1])
-        self.__last_collision = Collision(first.name, second.name, self.time)
-        print(f"bop: f: {first.name} s: {second.name}")
+        print(f"v1: {v1}")
+        print(f"v2: {v2}")
+        first.velocity = v1
+        second.velocity = v2
+        self.__last_collision = Collision(first.name, second.time, self.time)

@@ -28,14 +28,14 @@ if __name__ == "__main__":
             entity1 = Entity(2)
             entity1.name = f"{x} {y}"
             wall_cache[f"{x} {y}"] = [0, 0]
-            entity1.position = Vector(x-5, y-5)
+            entity1.position = Vector(2*(x-2.5), 2*(y-2.5))
             randomthings.append(entity1)
 
-    entity1 = Entity(5)
+    entity1 = Entity(8)
     entity1.name = f"other"
     wall_cache[f"other"] = [0, 0]
-    entity1.position = Vector(0, -7.5)
-    entity1.velocity = Vector(-1, 1.2)
+    entity1.position = Vector(-9, -9)
+    entity1.velocity = Vector(1, 2)
     randomthings.append(entity1)
 
     system = System(randomthings)
