@@ -1,35 +1,32 @@
 from src.units import Vector
-
-
-class Collision:
-    def __init__(self, first, second, time):
-        self.first = first
-        self.second = second
-        self.time = time
+from ..simulators import Entity
 
 
 class System:
+    # The interval that the system should update at
     continuous_interval = 0.008
 
     def __init__(self, entities):
-        self.entities = entities
-        self.__time = 0
+        self.entities: list[Entity] = entities
+        self.__time: float = 0
+        # The distance between two objects for them to collide
         self.collision_range = 0.25
-        self.__last_collision = None
         self.onUpdate = lambda system: ""
 
     @property
-    def time(self):
+    def time(self) -> float:
         return self.__time
 
     @time.setter
-    def time(self, value):
+    def time(self, value: float):
         delta = (value - self.__time)
+        # Update time separately for each continuous_interval in delta
         times = int(delta // self.continuous_interval)
         for i in range(times):
             self.__time += self.continuous_interval
             self.__update()
 
+        # Update time for the remainder amount
         self.__time += delta - (self.continuous_interval * times)
         self.__update()
 
@@ -40,32 +37,33 @@ class System:
         self.onUpdate(self)
 
     def __check_collision(self):
-        last_hit1 = ""
-        last_hit2 = ""
+        last_hit_name1 = ""
+        last_hit_name2 = ""
         for entity in self.entities:
             for other in self.entities:
+                # Objects sitting still can't start a collision
                 if entity.velocity == Vector(0, 0):
                     continue
 
-                if other.name == entity.name or other.name == last_hit1 or entity.name == last_hit2:
+                # Prevents a and b from colliding then b and a colliding again
+                if other.name == entity.name or other.name == last_hit_name1 or entity.name == last_hit_name2:
                     continue
 
-                if self.__last_collision is not None and (self.__last_collision.first == entity.name or self.__last_collision.first == other.name) and (self.__last_collision.second == entity.name or self.__last_collision.second == other.name):
-                    if self.time - self.__last_collision.time < 0.1:
-                        continue
-
+                # If the two entities are in range, trigger a collision
                 delta = (entity.position - other.position).mag
                 if delta < self.collision_range:
                     self.__apply_collision(entity, other)
-                    last_hit1 = entity.name
-                    last_hit2 = other.name
+                    last_hit_name1 = entity.name
+                    last_hit_name2 = other.name
 
     def __apply_collision(self, first, second):
-        v1 = first.velocity - (first.position - second.position)*((2*second.mass)/(first.mass + second.mass))*(((first.velocity - second.velocity)*(first.position - second.position)) / (first.position - second.position).mag ** 2)
-        v2 = second.velocity - (second.position - first.position)*((2*first.mass)/(first.mass + second.mass))*(((second.velocity - first.velocity)*(second.position - first.position)) / (second.position - first.position).mag ** 2)
+        # Collision formulas from Wikipedia
+        v1 = first.velocity - (first.position - second.position) * ((2 * second.mass) / (first.mass + second.mass)) * (
+                    ((first.velocity - second.velocity) * (first.position - second.position)) / (
+                        first.position - second.position).mag ** 2)
+        v2 = second.velocity - (second.position - first.position) * ((2 * first.mass) / (first.mass + second.mass)) * (
+                    ((second.velocity - first.velocity) * (second.position - first.position)) / (
+                        second.position - first.position).mag ** 2)
 
-        print(f"v1: {v1}")
-        print(f"v2: {v2}")
         first.velocity = v1
         second.velocity = v2
-        self.__last_collision = Collision(first.name, second.time, self.time)
