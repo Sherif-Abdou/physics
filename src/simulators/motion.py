@@ -29,5 +29,5 @@ class Motion:
         delta_time = after - before
         movement_vector = self.velocity * delta_time
         movement_vector += self.__applyAcceleration(before, after)
-        self.velocity += self.acceleration
+        self.velocity += self.acceleration*delta_time
         return movement_vector
